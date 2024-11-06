@@ -91,12 +91,15 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
+
+-- testing for dark background
+-- vim.opt.background = 'dark'
 
 -- Make line numbers default
 vim.opt.number = true
@@ -228,8 +231,74 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
+
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+
+  -- icons for file explorer
+  {
+    'nvim-tree/nvim-web-devicons',
+    config = function()
+      require('nvim-web-devicons').setup {
+        -- Enable color icons globally
+        color_icons = true,
+        -- Use default icons
+        default = true,
+        -- Enable strict icon selection
+        strict = true,
+        -- Manually set the variant
+        variant = 'dark', -- or "light", depending on your theme
+        -- Custom icons can go here (optional)
+        override = {
+          default_folder = {
+            icon = '', -- Closed folder icon
+            color = '#4A90E2',
+            name = 'DefaultFolder',
+          },
+          zsh = {
+            icon = '',
+            color = '#428850',
+            cterm_color = '65',
+            name = 'Zsh',
+          },
+        },
+        -- Example overrides by extension (optional)
+        override_by_extension = {
+          ['log'] = {
+            icon = '',
+            color = '#81e043',
+            name = 'Log',
+          },
+        },
+      }
+    end,
+  },
+
+  -- file explorer
+  {
+    'nvim-tree/nvim-tree.lua',
+    version = '*',
+    lazy = false,
+    dependencies = {
+      'nvim-tree/nvim-web-devicons', -- for file icons
+    },
+    config = function()
+      require('nvim-tree').setup {}
+    end,
+  },
+
+  -- colorscheme
+  --If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
+  {
+    'folke/tokyonight.nvim',
+    priority = 1000, -- Make sure to load this before all the other start plugins.
+    init = function()
+      -- You can configure highlights by doing something like:
+      -- vim.cmd.hi 'Comment gui=none'
+    end,
+  },
+
+  { 'bluz71/vim-moonfly-colors', name = 'moonfly', lazy = false, priority = 1000 },
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -614,7 +683,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -833,24 +902,6 @@ require('lazy').setup({
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-
-      -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
-    end,
-  },
-
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
@@ -964,6 +1015,12 @@ require('lazy').setup({
     },
   },
 })
+
+-- set the colorscheme to tokyonight
+vim.cmd [[colorscheme tokyonight-moon]]
+
+-- load custom keybindings
+require 'custom.keybindings'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
