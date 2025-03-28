@@ -31,6 +31,14 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 --vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- tmux navigation keybindings
+--  Use CTRL+<hjkl> to navigate between tmux panes
+vim.keymap.set('n', '<C-h>', '<cmd>TmuxNavigateLeft<CR>', { desc = 'Navigate to the left tmux pane' })
+vim.keymap.set('n', '<C-j>', '<cmd>TmuxNavigateDown<CR>', { desc = 'Navigate to the lower tmux pane' })
+vim.keymap.set('n', '<C-k>', '<cmd>TmuxNavigateUp<CR>', { desc = 'Navigate to the upper tmux pane' })
+vim.keymap.set('n', '<C-l>', '<cmd>TmuxNavigateRight<CR>', { desc = 'Navigate to the right tmux pane' })
+vim.keymap.set('n', '<C-\\>', '<cmd>TmuxNavigatePrevious<CR>', { desc = 'Navigate to the previous tmux pane' })
+
 -- ~/.config/nvim/lua/custom/keybindings.lua
 vim.api.nvim_set_keymap('n', '<leader>e', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
 
@@ -65,6 +73,36 @@ vim.keymap.set('n', '<leader>s/', function()
   }
 end, { desc = '[S]earch [/] in Open Files' })
 
+-- LuaSnip keybindings for React snippets
+local ls = require 'luasnip'
+
+-- Expand snippet or jump to the next placeholder
+vim.keymap.set({ 'i', 's' }, '<C-j>', function()
+  if ls.expand_or_jumpable() then
+    ls.expand_or_jump()
+  elseif ls.expandable() then
+    ls.expand()
+  end
+end, { silent = true, desc = 'Expand snippet or jump to next placeholder' })
+
+-- Jump to the previous placeholder
+vim.keymap.set({ 'i', 's' }, '<C-k>', function()
+  if ls.jumpable(-1) then
+    ls.jump(-1)
+  end
+end, { silent = true, desc = 'Jump to previous placeholder' })
+
+-- Select choice (if the snippet has multiple options)
+vim.keymap.set({ 'i', 's' }, '<C-r>', function()
+  if ls.choice_active() then
+    ls.change_choice(1)
+  end
+end, { silent = true, desc = 'Cycle through snippet choices' })
+
+-- Trigger snippet expansion manually (useful if you want to see available snippets)
+vim.keymap.set('i', '<C-s>', function()
+  require 'luasnip.extras.select_choice'()
+end, { silent = true, desc = 'Select a snippet from the list' })
 -- Shortcut for searching your Neovim configuration files
 vim.keymap.set('n', '<leader>sn', function()
   builtin.find_files { cwd = vim.fn.stdpath 'config' }
