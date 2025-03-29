@@ -160,6 +160,13 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- Resize window
+vim.api.nvim_create_autocmd('VimResized', {
+  callback = function()
+    vim.cmd 'redraw!'
+  end,
+})
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
