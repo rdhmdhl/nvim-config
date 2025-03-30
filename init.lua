@@ -712,7 +712,7 @@ require('lazy').setup({
       require('mason').setup()
 
       -- Explicitly list server names for ensure_installed, excluding ruff_lsp if needed
-      local ensure_installed_servers = { 'clangd', 'lua_ls', 'pyright', 'ruff', 'ts_ls' }
+      local ensure_installed_servers = { 'clangd', 'lua_ls', 'pyright', 'ruff', 'ts_ls', 'gopls' }
 
       require('mason-lspconfig').setup {
         ensure_installed = ensure_installed_servers,
@@ -938,9 +938,9 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   -- require 'kickstart.plugins.debug',
-  -- require 'kickstart.plugins.indent_line',
+  require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
