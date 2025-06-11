@@ -114,3 +114,11 @@ end, { silent = true, desc = 'Select a snippet from the list' })
 vim.keymap.set('n', '<leader>sn', function()
   builtin.find_files { cwd = vim.fn.stdpath 'config' }
 end, { desc = '[S]earch [N]eovim files' })
+
+-- Center page after paging up or down a half page
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll up half a screen and center' })
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll down half a screen and center' })
+
+-- Center page after '/' search
+vim.keymap.set('n', 'n', 'nzzzv', { desc = 'Next search result and center' })
+vim.keymap.set('n', 'N', 'Nzzzv', { desc = 'Previous search result and center' })

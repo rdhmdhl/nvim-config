@@ -6,7 +6,7 @@ mason.setup()
 
 -- Setup Mason-LSPConfig
 mason_lspconfig.setup {
-  ensure_installed = { 'lua_ls', 'pyright', 'ruff', 'gopls', 'clangd', 'ts_ls', 'yaml-language-server' },
+  ensure_installed = { 'lua_ls', 'pyright', 'ruff', 'gopls', 'clangd', 'ts_ls', 'yamlls' },
   automatic_installation = false,
   automatic_enable = false,
 }
