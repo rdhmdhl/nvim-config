@@ -3,8 +3,8 @@ return {
   config = function()
     require('lsp_lines').setup()
     vim.diagnostic.config {
-      virtual_text = false, -- disable inline diagnostics
-      virtual_lines = true, -- enable virtual lines (the wrapped ones)
+      virtual_text = true, -- disable inline diagnostics
+      virtual_lines = false, -- enable virtual lines (the wrapped ones)
     }
   end,
 }
