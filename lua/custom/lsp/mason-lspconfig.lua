@@ -6,7 +6,7 @@ mason.setup()
 
 -- Setup Mason-LSPConfig
 mason_lspconfig.setup {
-  ensure_installed = { 'lua_ls', 'pyright', 'ruff', 'gopls', 'clangd', 'ts_ls', 'yamlls' },
+  ensure_installed = { 'lua_ls', 'pyright', 'ruff', 'gopls', 'clangd', 'ts_ls', 'yamlls', 'terraformls' },
   automatic_installation = false,
   automatic_enable = false,
 }
@@ -15,6 +15,20 @@ mason_lspconfig.setup {
 local lspconfig = require 'lspconfig'
 
 local servers = {
+  terraformls = {
+    filetypes = { 'terraform', 'tf', 'hcl' },
+  },
+  gopls = {
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+          shadow = true,
+        },
+        staticcheck = true,
+      },
+    },
+  },
   yamlls = {
     settings = {
       yaml = {

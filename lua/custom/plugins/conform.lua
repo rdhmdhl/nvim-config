@@ -29,12 +29,14 @@ return {
       }
     end,
     formatters_by_ft = {
+      go = { 'goimports' },
       lua = { 'stylua' },
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
       javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       yaml = { 'yamlfmt' },
+      terraform = { 'terraform_fmt' },
     },
   },
 }
