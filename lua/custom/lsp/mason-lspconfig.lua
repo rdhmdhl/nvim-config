@@ -53,7 +53,10 @@ local servers = {
     settings = {
       python = {
         analysis = {
-          ignore = { '*' }, -- Let Ruff handle linting/formatting
+          -- ignore = { '*' }, -- Let Ruff handle linting/formatting
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
+          diagnosticMode = 'openFilesOnly', -- or "workspace" if you want broader checks
         },
       },
     },
